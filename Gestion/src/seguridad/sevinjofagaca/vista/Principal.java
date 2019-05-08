@@ -82,13 +82,30 @@ public class Principal extends JFrame {
      */
     private void quitarPanelesDelMarco() {
         setVisible(false);
+        if (auditoria!=null) {
+            remove(auditoria);
+            auditoria=null;
+        }
         if (registro!=null) {
             remove(registro);
             registro=null;
         }
-        //hacer lo anterior parra cada panel que este en el marco
+        if(cifrado!=null){
+            remove(cifrado);
+            cifrado=null;
+        }
+        if(menu!=null){
+            remove(menu);
+            menu=null;
+        }
+        if(inventario!=null){
+            remove(inventario);
+            inventario=null;
+        }
         
-    
+        
+        
+        //hacer lo anterior parra cada panel que este en el marco
     }
     /**
      * Metodo para iniciar el marco
@@ -118,7 +135,7 @@ public class Principal extends JFrame {
     //metodos de navegacion
     /**
      * Metodo para pasar al panel de la calculadora
-     *
+     */
     protected void irAAuditoria() {
         cerrarVentana();
         iniciarMarco();
@@ -130,10 +147,10 @@ public class Principal extends JFrame {
         pack();
         //centra la aplicacion 
         setLocationRelativeTo(null);
-    }*
+    }
     
     protected void VolverAMenu() {
-        
+        cerrarVentana();
         iniciarMarco();
         //agrega el panelinicial
         menu = new Menu(this);
@@ -144,7 +161,7 @@ public class Principal extends JFrame {
         //centra la aplicacion 
         setLocationRelativeTo(null);
     }
-    **
+    /**
      * Metodo para ir al panel de registrar
      */
     protected  void irARegistrar() {
@@ -170,14 +187,14 @@ public class Principal extends JFrame {
     }
     
     /**
-     * Metodo para ir al historial
-     *
-    protected void irAHistorial() {
+     * Metodo para ir al cifrado
+     */
+    protected void irACifrado() {
         iniciarMarco();
         //agrega el panelinicial
-        verHistorial = new VerHistorial(this);
-        verHistorial.setVisible(true);
-        add(verHistorial);
+        cifrado = new Cifrado(this);
+        cifrado.setVisible(true);
+        add(cifrado);
         //se ajusta el frame
         pack();
         //centra la aplicacion 

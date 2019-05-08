@@ -5,6 +5,13 @@
  */
 package seguridad.sevinjofagaca.vista;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
 
 /**
@@ -125,7 +132,19 @@ public class Login extends javax.swing.JPanel {
      * @param evt muestra el evento que se esta realizando conforme a una accion
      */
     private void jButtonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngresarActionPerformed
-        ingresar();
+        try {
+            ingresar();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeyException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalBlockSizeException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BadPaddingException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonIngresarActionPerformed
     /**
      * Metodo que contiene la accion del boton al ser activado, en este caso
@@ -166,7 +185,7 @@ public class Login extends javax.swing.JPanel {
     /**
      * Metodo para ingresa a la calculadora, con su respectivas verificaciones
      */
-    private void ingresar() {
+    private void ingresar() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         String usuario = jTextFieldUsuario.getText();
         String pass = jPasswordFieldContrasenia.getText();
         if (!usuario.equals("")) {
