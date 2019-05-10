@@ -23,7 +23,7 @@
                       <Component id="jButton2" min="-2" pref="83" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="83" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jButton3" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonInventario" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -47,7 +47,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonInventario" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="cifrado" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="30" max="32767" attributes="0"/>
@@ -84,13 +84,16 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="jButtonInventario">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="12" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Inventario"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonInventarioActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cifrado">
       <Properties>

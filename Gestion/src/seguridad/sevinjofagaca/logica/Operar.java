@@ -28,6 +28,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import seguridad.sevinjofagaca.controlador.ServicioJpaController;
+import seguridad.sevinjofagaca.modelo.Servicio;
 
 /**
  *
@@ -173,4 +175,24 @@ public class Operar {
        return currentUser.getHistorialList();       
     }
      */
+
+    public boolean RegistrarServicio(String nombreServicio, String tipoServicio, String costoServicio, String plazoServicio) {
+     
+        ServicioJpaController ujc = new ServicioJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+        Servicio u = new Servicio();
+        try {
+            u.setNombre(nombreServicio);
+            u.setTipoServicio(tipoServicio);
+            u.setPrecio(Integer.parseInt(costoServicio));
+            u.setPlazoPago(plazoServicio);
+            u.setIdUser(currentUser.getId());
+            ujc.create(u);
+            JOptionPane.showMessageDialog(null, "Se Guardaron Los datos");
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "error el registro no funcionannnaaaa");
+            return false;
+        }
+    }
 }

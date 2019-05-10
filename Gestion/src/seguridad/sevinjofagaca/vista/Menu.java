@@ -33,7 +33,7 @@ public class Menu extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonInventario = new javax.swing.JButton();
         cifrado = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -51,8 +51,13 @@ public class Menu extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jButton3.setText("Inventario");
+        jButtonInventario.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButtonInventario.setText("Inventario");
+        jButtonInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInventarioActionPerformed(evt);
+            }
+        });
 
         cifrado.setText("Cifrado diffie");
         cifrado.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +76,7 @@ public class Menu extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton3))
+                    .addComponent(jButtonInventario))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(84, Short.MAX_VALUE)
@@ -90,7 +95,7 @@ public class Menu extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(jButtonInventario)
                 .addGap(18, 18, 18)
                 .addComponent(cifrado)
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -106,12 +111,17 @@ public class Menu extends javax.swing.JPanel {
           p.irACifrado();
     }//GEN-LAST:event_cifradoActionPerformed
 
+    private void jButtonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventarioActionPerformed
+        // TODO add your handling code here:
+        p.irAInventario();
+    }//GEN-LAST:event_jButtonInventarioActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cifrado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonInventario;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

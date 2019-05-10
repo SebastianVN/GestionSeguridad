@@ -5,21 +5,28 @@
  */
 package seguridad.sevinjofagaca.vista;
 
+import java.util.List;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import seguridad.sevinjofagaca.controlador.ServicioJpaController;
 import seguridad.sevinjofagaca.controlador.UsuariosJpaController;
+import seguridad.sevinjofagaca.modelo.Servicio;
 
 /**
  *
  * @author sevin
  */
 public class Inventario extends javax.swing.JPanel {
+
+    ServicioJpaController CServicio = new ServicioJpaController(Persistence.createEntityManagerFactory("GestionPU"));
     /**
      * Variable de la clase principal para llamar los atributos y metodos de la
      * clase principal
      */
     private Principal p;
     private UsuariosJpaController CUsuario;
-
+    Servicio sEdit;
     /**
      * Este es el metodo contructor de registro
      *
@@ -28,6 +35,8 @@ public class Inventario extends javax.swing.JPanel {
     public Inventario(Principal p) {
         this.p = p;
         initComponents();
+        CrearModelo();
+        CargarServicio();
     }
 
     /**
@@ -50,6 +59,11 @@ public class Inventario extends javax.swing.JPanel {
         jTextFieldPlazoServicio = new javax.swing.JTextField();
         jButtonRegistrar = new javax.swing.JButton();
         jButtonLimpiar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Tabla = new javax.swing.JTable();
+        jButtonActualizar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
+        jButtonSeleccionar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel1.setText("Modulo de Inventario");
@@ -78,32 +92,78 @@ public class Inventario extends javax.swing.JPanel {
         });
 
         jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarActionPerformed(evt);
+            }
+        });
+
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(Tabla);
+
+        jButtonActualizar.setText("Actualizar");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+
+        jButtonSeleccionar.setText("Seleccionar");
+        jButtonSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSeleccionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonRegistrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextFieldNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextFieldTipoServicio)
-                        .addComponent(jTextFieldCostoServicio)
-                        .addComponent(jTextFieldPlazoServicio)
-                        .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(40, 40, 40))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextFieldNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jTextFieldTipoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldCostoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldPlazoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonActualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonSeleccionar))
+                            .addComponent(jButtonEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,24 +173,27 @@ public class Inventario extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonLimpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldTipoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTipoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonRegistrar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextFieldCostoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldCostoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonEliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextFieldPlazoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRegistrar)
-                    .addComponent(jButtonLimpiar))
-                .addContainerGap(68, Short.MAX_VALUE))
+                    .addComponent(jTextFieldPlazoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonActualizar)
+                    .addComponent(jButtonSeleccionar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -139,43 +202,163 @@ public class Inventario extends javax.swing.JPanel {
         registrar();
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+        // TODO add your handling code here:
+        jTextFieldNombreServicio.setText("");
+        jTextFieldCostoServicio.setText("");
+        jTextFieldPlazoServicio.setText("");
+        jTextFieldTipoServicio.setText("");
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            
+            int s = (int) Tabla.getValueAt(Tabla.getSelectedRow(), 0);
+            CServicio.destroy(s);
+            
+            CargarServicio();
+            
+            JOptionPane.showMessageDialog(null, "El registro se eliminó con éxito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        // TODO add your handling code here:
+        try {
+            sEdit.setNombre(jTextFieldNombreServicio.getText());
+        sEdit.setTipoServicio(jTextFieldTipoServicio.getText());
+        sEdit.setPrecio(Integer.parseInt(jTextFieldCostoServicio.getText()));
+        sEdit.setPlazoPago(jTextFieldPlazoServicio.getText());
+        
+        CServicio.edit(sEdit);
+        
+        JOptionPane.showMessageDialog(null, "El registro fué editado con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
+
+    private void jButtonSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarActionPerformed
+        // TODO add your handling code here:
+        
+        int s = (int) Tabla.getValueAt(Tabla.getSelectedRow(), 0);
+        jTextFieldNombreServicio.setText(Tabla.getValueAt(Tabla.getSelectedRow(), 1).toString()); 
+        jTextFieldTipoServicio.setText(Tabla.getValueAt(Tabla.getSelectedRow(), 2).toString());
+        jTextFieldCostoServicio.setText(Tabla.getValueAt(Tabla.getSelectedRow(), 3).toString()); 
+        jTextFieldPlazoServicio.setText(Tabla.getValueAt(Tabla.getSelectedRow(), 4).toString()); 
+        
+        sEdit = (Servicio)Tabla.getValueAt(Tabla.getSelectedRow(), 0);
+        
+    }//GEN-LAST:event_jButtonSeleccionarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Tabla;
+    private javax.swing.JButton jButtonActualizar;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonRegistrar;
+    private javax.swing.JButton jButtonSeleccionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldCostoServicio;
     private javax.swing.JTextField jTextFieldNombreServicio;
     private javax.swing.JTextField jTextFieldPlazoServicio;
     private javax.swing.JTextField jTextFieldTipoServicio;
     // End of variables declaration//GEN-END:variables
 
-    private void registrar(){
+    private void registrar() {
         String nombreServicio = jTextFieldNombreServicio.getText();
         String tipoServicio = jTextFieldTipoServicio.getText();
         String costoServicio = jTextFieldCostoServicio.getText();
         String plazoServicio = jTextFieldPlazoServicio.getText();
-        
-        if(!nombreServicio.equals("")){
-            if(!tipoServicio.equals("")){
-                if(!costoServicio.equals("")){
-                    if(!plazoServicio.equals("")){
-                        
+
+        if (!nombreServicio.equals("")) {
+            if (!tipoServicio.equals("")) {
+                if (!costoServicio.equals("")) {
+                    if (!plazoServicio.equals("")) {
+                        if (p.validarRegistroServicio(nombreServicio, tipoServicio, costoServicio, plazoServicio)) {
+                            CargarServicio();
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "El plazo no es valido", "Error registrar el plazo", JOptionPane.ERROR_MESSAGE);
                     }
-                    else {
-                        JOptionPane.showMessageDialog(this, "El servicio ya existe", "Error al registrar servicio", JOptionPane.ERROR_MESSAGE);
-                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "El costo no corresponde", "Error al registrar el valor", JOptionPane.ERROR_MESSAGE);
                 }
-            }else {
+            } else {
                 JOptionPane.showMessageDialog(this, "No has seleccionado el tipo de servicio", "Selecciona un tipo de servicio", JOptionPane.ERROR_MESSAGE);
             }
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(this, "El servicio ya existe", "Error al registrar servicio", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void CargarServicio() {
+        try {
+            System.out.println("Cargando informacion...");
+            Object o[] = null;
+            List<Servicio> listServicios = CServicio.findServicioEntities();
+
+            for (int i = 0; i < listServicios.size(); i++) {
+                modelo2.addRow(o);
+                modelo2.setValueAt(listServicios.get(i).getId(), i, 0);
+                modelo2.setValueAt(listServicios.get(i).getNombre(), i, 1);
+                modelo2.setValueAt(listServicios.get(i).getTipoServicio(), i, 2);
+                modelo2.setValueAt(listServicios.get(i).getPrecio(), i, 3);
+                modelo2.setValueAt(listServicios.get(i).getPlazoPago(), i, 4);
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+    }
+
+    DefaultTableModel modelo2;
+
+    private void CrearModelo() {
+        try {
+            modelo2 = (new DefaultTableModel(
+                    null, new String[]{
+                        "id", "nombre", "tipoServicio",
+                        "precio", "plazoPago", "id_user"}) {
+                Class[] types = new Class[]{
+                    java.lang.String.class,
+                    java.lang.String.class,
+                    java.lang.String.class,
+                    java.lang.String.class,
+                    java.lang.String.class,
+                    java.lang.String.class
+                };
+                boolean[] canEdit = new boolean[]{
+                    false, false, false, false, false, false
+                };
+
+                @Override
+                public Class getColumnClass(int columnIndex) {
+                    return types[columnIndex];
+                }
+
+                @Override
+                public boolean isCellEditable(int rowIndex, int colIndex) {
+                    return canEdit[colIndex];
+                }
+            });
+            Tabla.setModel(modelo2);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString() + "error2");
         }
     }
 }

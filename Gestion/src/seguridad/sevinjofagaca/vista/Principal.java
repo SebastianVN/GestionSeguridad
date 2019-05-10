@@ -201,21 +201,6 @@ public class Principal extends JFrame {
         setLocationRelativeTo(null);
     }
     
-    /**
-     * Metodo para ir al inventario
-     */
-    protected void irInventario(){
-        iniciarMarco();
-        //agrega el panelinicial
-        inventario = new Inventario(this);
-        inventario.setVisible(true);
-        add(inventario);
-        
-        //se ajusta el frame
-        pack();
-        //centra la aplicacion 
-        setLocationRelativeTo(null);
-    }
     
     //metodos de logica
     /**
@@ -264,5 +249,28 @@ public class Principal extends JFrame {
         pack();
         //centra la aplicacion 
         setLocationRelativeTo(null);  
+    }
+
+    boolean validarRegistroServicio(String nombreServicio, String tipoServicio, String costoServicio, String plazoServicio) {
+        
+        if(operar.RegistrarServicio(nombreServicio, tipoServicio, costoServicio, plazoServicio)){
+        
+        return true;
+        }else{
+            return false;
+        }
+    }
+
+    void irAInventario() {
+        //cerrarVentana();
+        iniciarMarco();
+        //agrega el panelinicial
+        inventario = new Inventario(this);
+        inventario.setVisible(true);
+        add(inventario);
+        //se ajusta el frame
+        pack();
+        //centra la aplicacion 
+        setLocationRelativeTo(null);
     }
 }
