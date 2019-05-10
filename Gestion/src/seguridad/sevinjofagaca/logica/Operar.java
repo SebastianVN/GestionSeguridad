@@ -28,6 +28,10 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.swing.table.DefaultTableModel;
+import seguridad.sevinjofagaca.controlador.LogsJpaController;
+import seguridad.sevinjofagaca.modelo.Logs;
+import seguridad.sevinjofagaca.modelo.Servicio;
 
 /**
  *
@@ -168,9 +172,34 @@ public class Operar {
         SecretKeySpec secretKey = new SecretKeySpec(crudo, "AES");
         llaveDefinitiva = secretKey;
     }
-    /*
-    public List<Historial> obtenerHistorialDeUsuario(){        
-       return currentUser.getHistorialList();       
+    
+
+    public void ObtenerUsuarios(DefaultTableModel modelo2) {
+         UsuariosJpaController ujc = new UsuariosJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+         Object O[] = null;
+         List<Usuarios> user = ujc.findUsuariosEntities();
+         for(int i = 0; i < user.size(); i++){
+             modelo2.addRow(O);
+             modelo2.setValueAt(user.get(i).getId(), i, 0);
+             modelo2.setValueAt(user.get(i).getUser(), i, 1);
+             modelo2.setValueAt(user.get(i).getNombre(), i, 2);
+             modelo2.setValueAt(user.get(i).getApellido(), i, 3);
+             
+                     
+         }
     }
-     */
+
+    public void obtenerLogs(DefaultTableModel modelo2) {
+        LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+        Object O[]=null;
+        List<Logs> logs = lg.findLogsEntities();
+        for(int i = 0; i < logs.size(); i++){
+            modelo2.addRow(O);
+             modelo2.setValueAt(logs.get(i).getId(), i, 0);
+             modelo2.setValueAt(logs.get(i).getTipoEvento(), i, 1);
+             modelo2.setValueAt(logs.get(i).getFecha(), i, 2);
+             modelo2.setValueAt(logs.get(i).getIdUser(), i, 3);
+        }
+    }
+     
 }
