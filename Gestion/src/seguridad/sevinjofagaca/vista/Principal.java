@@ -7,16 +7,15 @@ package seguridad.sevinjofagaca.vista;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JFrame;
 import seguridad.sevinjofagaca.logica.Operar;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JTable;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
-import seguridad.sevinjofagaca.controlador.UsuariosJpaController;
 
 /**
  *
@@ -300,6 +299,16 @@ public class Principal extends JFrame {
         pack();
         //centra la aplicacion 
         setLocationRelativeTo(null);
+    }
+
+
+    protected void eliminarUsuario(JTable Tabla) {
+        operar.eliminar(Tabla);
+    }
+
+    protected void modificarUsuario(String id, String nombre, String apellido, String user, JTable Tabla,String pass) {
+        operar.Modificar(id,nombre,apellido,user,Tabla,pass);
+        
     }
 
 }
