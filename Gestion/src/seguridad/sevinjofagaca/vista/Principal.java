@@ -30,7 +30,6 @@ public class Principal extends JFrame {
     private Operar operar;
     private Menu menu;
     private Auditoria auditoria;
-    private Roles roles;
     private Inventario inventario;
     private Cifrado cifrado;
     private Administrador admin;
