@@ -217,6 +217,21 @@ public class Principal extends JFrame {
         setLocationRelativeTo(null);
     }
     
+    /**
+     * Metodo para ir al inventario
+     */
+    protected void irInventario(){
+        iniciarMarco();
+        //agrega el panelinicial
+        inventario = new Inventario(this);
+        inventario.setVisible(true);
+        add(inventario);
+        
+        //se ajusta el frame
+        pack();
+        //centra la aplicacion 
+        setLocationRelativeTo(null);
+    }
     
     //metodos de logica
     /**
