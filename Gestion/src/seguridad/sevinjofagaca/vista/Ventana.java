@@ -41,6 +41,7 @@ public class Ventana extends JDialog {
         this.jPanel.setVisible(true);
         this.add(this.jPanel);
         this.pack();
+        this.setTitle("Aplicacion Sector eléctrico");
         this.setVisible(true);
         this.setLocationRelativeTo(this.principal);
     }

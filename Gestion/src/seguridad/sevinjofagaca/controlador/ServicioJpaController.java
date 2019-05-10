@@ -14,11 +14,19 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import seguridad.sevinjofagaca.controlador.exceptions.NonexistentEntityException;
+<<<<<<< HEAD
+=======
+import seguridad.sevinjofagaca.controlador.exceptions.PreexistingEntityException;
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
 import seguridad.sevinjofagaca.modelo.Servicio;
 
 /**
  *
+<<<<<<< HEAD
  * @author jofa7
+=======
+ * @author sevin
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
  */
 public class ServicioJpaController implements Serializable {
 
@@ -31,13 +39,25 @@ public class ServicioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
+<<<<<<< HEAD
     public void create(Servicio servicio) {
+=======
+    public void create(Servicio servicio) throws PreexistingEntityException, Exception {
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(servicio);
             em.getTransaction().commit();
+<<<<<<< HEAD
+=======
+        } catch (Exception ex) {
+            if (findServicio(servicio.getId()) != null) {
+                throw new PreexistingEntityException("Servicio " + servicio + " already exists.", ex);
+            }
+            throw ex;
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
         } finally {
             if (em != null) {
                 em.close();
