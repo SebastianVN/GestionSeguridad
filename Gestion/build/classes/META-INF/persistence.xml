@@ -3,6 +3,8 @@
   <persistence-unit name="GestionPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>seguridad.sevinjofagaca.modelo.Usuarios</class>
+    <class>seguridad.sevinjofagaca.modelo.Servicio</class>
+    <class>seguridad.sevinjofagaca.modelo.Logs</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gestion?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

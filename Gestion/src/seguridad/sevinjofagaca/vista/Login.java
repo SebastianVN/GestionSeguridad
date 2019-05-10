@@ -191,7 +191,11 @@ public class Login extends javax.swing.JPanel {
         if (!usuario.equals("")) {
             if (!pass.equals("")) {
                 if (p.validar(usuario, pass)) {
-                    p.irAMenu();
+                    if(usuario.equals("admin")){
+                        p.irAMenu();
+                    }else{
+                        p.irAAdministrador();
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "Usuario o Contraseña errados o usuario no registrado", "Error al Iniciar Sesion", JOptionPane.ERROR_MESSAGE);
                 }

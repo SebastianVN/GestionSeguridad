@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import seguridad.sevinjofagaca.logica.Operar;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
+import javax.swing.table.DefaultTableModel;
+import seguridad.sevinjofagaca.controlador.UsuariosJpaController;
 
 /**
  *
@@ -31,6 +33,7 @@ public class Principal extends JFrame {
     private Roles roles;
     private Inventario inventario;
     private Cifrado cifrado;
+    private Administrador admin;
     String UserLogin;
     
     
@@ -53,7 +56,7 @@ public class Principal extends JFrame {
         operar = new Operar();
         operar.generarClave();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setTitle("Calculadora");
+        this.setTitle("Aplicacion Sector eléctrico");
         this.setResizable(false);
         this.setVisible(false);
         //inicia caracteristicas del Frame
@@ -102,6 +105,10 @@ public class Principal extends JFrame {
             remove(inventario);
             inventario=null;
         }
+        if(admin!=null){
+            remove(admin);
+            admin=null;
+        }
         
         
         
@@ -137,7 +144,6 @@ public class Principal extends JFrame {
      * Metodo para pasar al panel de la calculadora
      */
     protected void irAAuditoria() {
-        cerrarVentana();
         iniciarMarco();
         //agrega el panelinicial
         auditoria = new Auditoria(this);
@@ -148,9 +154,19 @@ public class Principal extends JFrame {
         //centra la aplicacion 
         setLocationRelativeTo(null);
     }
+    protected void irAAdministrador() {
+        iniciarMarco();
+        //agrega el panelinicial
+        admin = new Administrador(this);
+        admin.setVisible(true);
+        add(admin);
+        //se ajusta el frame
+        pack();
+        //centra la aplicacion 
+        setLocationRelativeTo(null);
+    }
     
     protected void VolverAMenu() {
-        cerrarVentana();
         iniciarMarco();
         //agrega el panelinicial
         menu = new Menu(this);
@@ -250,4 +266,26 @@ public class Principal extends JFrame {
         //centra la aplicacion 
         setLocationRelativeTo(null);  
     }
+
+    protected void ObtenerUsuarios(DefaultTableModel modelo2) {
+        operar.ObtenerUsuarios(modelo2);
+    }
+
+    protected void ObtenerLogs(DefaultTableModel modelo2) {
+        operar.obtenerLogs(modelo2);
+    }
+
+    protected void IrAInventario() {
+        //cerrarVentana();
+        iniciarMarco();
+        //agrega el panelinicial
+        inventario = new Inventario(this);
+        inventario.setVisible(true);
+        add(inventario);
+        //se ajusta el frame
+        pack();
+        //centra la aplicacion 
+        setLocationRelativeTo(null);
+    }
+
 }
