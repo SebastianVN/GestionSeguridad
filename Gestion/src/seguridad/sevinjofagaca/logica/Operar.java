@@ -23,14 +23,17 @@ import javax.swing.JOptionPane;
 import sun.misc.BASE64Encoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-<<<<<<< HEAD
 import seguridad.sevinjofagaca.controlador.ServicioJpaController;
-=======
+
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import seguridad.sevinjofagaca.controlador.LogsJpaController;
 import seguridad.sevinjofagaca.modelo.Logs;
@@ -50,6 +53,12 @@ public class Operar {
      */
     private Usuarios currentUser;
     private SecretKeySpec llaveDefinitiva;
+    
+    public static String fechaActual(){
+        Date fecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
+        return formato.format(fecha);
+    }
 
     public boolean iniciarSesion(String user, String pass) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("AES");
@@ -64,15 +73,40 @@ public class Operar {
         if (u != null) {
             if (u.getUser().equals(user) && u.getContraseña().equals(asHex(encriptado))) {
                 currentUser = u;
+                LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+                Logs logs = new Logs();
+                System.out.println("Esta es la fecha actual : "+fechaActual());
+                try {
+                    logs.setId(23);
+                    logs.setTipoEvento("Login no exitoso");
+                    logs.setFecha(fechaActual());
+                    logs.setIdUser(currentUser.getId());
+                    lg.create(logs);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error en el ingreso, intente de nuevo");
+                }
                 return true;
             } else {
                 currentUser = null;
+                
                 return false;
             }
         } else {
+            LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+                Logs logs = new Logs();
+                try {
+                    logs.setId(23);
+                    logs.setTipoEvento("Login no exitoso");
+                    logs.setFecha(fechaActual());
+                    logs.setIdUser(currentUser.getId());
+                    lg.create(logs);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error en el ingreso, intente de nuevo");
+                }
             currentUser = null;
             return false;
         }
+        
     }
 
     public void cerrarSesion() {
@@ -146,10 +180,11 @@ public class Operar {
             u.setContraseña(asHex(encriptado));
             ujc.create(u);
             JOptionPane.showMessageDialog(null, "Se Guardaron Los datos");
+            
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "error el registro no funcionannnaaaa");
+            JOptionPane.showMessageDialog(null, "Error en el resgitro intente de nuevo");
             return false;
         }
 
@@ -192,7 +227,6 @@ public class Operar {
                      
          }
     }
-<<<<<<< HEAD
      */
 
     public boolean RegistrarServicio(String nombreServicio, String tipoServicio, String costoServicio, String plazoServicio) {
@@ -214,7 +248,6 @@ public class Operar {
             return false;
         }
     }
-=======
 
     public void obtenerLogs(DefaultTableModel modelo2) {
         LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
@@ -228,6 +261,32 @@ public class Operar {
              modelo2.setValueAt(logs.get(i).getIdUser(), i, 3);
         }
     }
+
+    public void eliminar(JTable Tabla) {
+        try {
+            UsuariosJpaController ujc = new UsuariosJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+       int u = (int) Tabla.getValueAt(Tabla.getSelectedRow(), 0);
+        ujc.destroy(u);
+        JOptionPane.showMessageDialog(null, "El usuario ha sido eliminado correctamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, ""+e.getMessage());
+        }
+    }
+
+    public void Modificar(String id, String nombre, String apellido, String user,JTable Tabla,String pass) {
+        try {
+            UsuariosJpaController ujc = new UsuariosJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+        Usuarios u = (Usuarios) Tabla.getValueAt(Tabla.getSelectedRow(), 0);
+        u.setId(Integer.parseInt(id));
+        u.setNombre(nombre);
+        u.setApellido(apellido);
+        u.setContraseña(pass);
+        u.setUser(user);
+        ujc.edit(u);
+        JOptionPane.showMessageDialog(null, "El usuario ha sido Modificado correctamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, ""+e.getMessage());
+        }
+    }
      
->>>>>>> eab728accb52aa7405ece833836457003bda885f
 }
