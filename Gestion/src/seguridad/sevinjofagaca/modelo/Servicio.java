@@ -9,15 +9,15 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-<<<<<<< HEAD
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-=======
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
->>>>>>> eab728accb52aa7405ece833836457003bda885f
+
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,11 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
-<<<<<<< HEAD
  * @author jofa7
-=======
  * @author sevin
->>>>>>> eab728accb52aa7405ece833836457003bda885f
  */
 @Entity
 @Table(name = "servicio")
@@ -46,10 +43,8 @@ public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-<<<<<<< HEAD
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-=======
->>>>>>> eab728accb52aa7405ece833836457003bda885f
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -68,12 +63,12 @@ public class Servicio implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_user")
     private int idUser;
-<<<<<<< HEAD
-=======
+
+
     @JoinColumn(name = "us", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     public Usuarios us;
->>>>>>> eab728accb52aa7405ece833836457003bda885f
+
 
     public Servicio() {
     }

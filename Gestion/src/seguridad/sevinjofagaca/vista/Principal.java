@@ -275,7 +275,7 @@ public class Principal extends JFrame {
         }
     }
 
-    void irAInventario() {
+   
     protected void ObtenerUsuarios(DefaultTableModel modelo2) {
         operar.ObtenerUsuarios(modelo2);
     }

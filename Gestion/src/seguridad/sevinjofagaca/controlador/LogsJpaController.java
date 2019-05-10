@@ -14,19 +14,18 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import seguridad.sevinjofagaca.controlador.exceptions.NonexistentEntityException;
-<<<<<<< HEAD
-=======
+
+
 import seguridad.sevinjofagaca.controlador.exceptions.PreexistingEntityException;
->>>>>>> eab728accb52aa7405ece833836457003bda885f
+
 import seguridad.sevinjofagaca.modelo.Logs;
 
 /**
  *
-<<<<<<< HEAD
- * @author jofa7
-=======
+
+ *
  * @author sevin
->>>>>>> eab728accb52aa7405ece833836457003bda885f
+
  */
 public class LogsJpaController implements Serializable {
 
@@ -39,25 +38,24 @@ public class LogsJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-<<<<<<< HEAD
-    public void create(Logs logs) {
-=======
+    
+
     public void create(Logs logs) throws PreexistingEntityException, Exception {
->>>>>>> eab728accb52aa7405ece833836457003bda885f
+
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(logs);
             em.getTransaction().commit();
-<<<<<<< HEAD
-=======
+
+
         } catch (Exception ex) {
             if (findLogs(logs.getId()) != null) {
                 throw new PreexistingEntityException("Logs " + logs + " already exists.", ex);
             }
             throw ex;
->>>>>>> eab728accb52aa7405ece833836457003bda885f
+
         } finally {
             if (em != null) {
                 em.close();

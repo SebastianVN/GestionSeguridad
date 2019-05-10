@@ -135,12 +135,12 @@ public class Menu extends javax.swing.JPanel {
           p.irACifrado();
     }//GEN-LAST:event_cifradoActionPerformed
 
-<<<<<<< HEAD
+
     private void jButtonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventarioActionPerformed
         // TODO add your handling code here:
         p.irAInventario();
     }//GEN-LAST:event_jButtonInventarioActionPerformed
-=======
+
     private void ButtonAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAdminActionPerformed
         // TODO add your handling code here:
         p.irAAdministrador();
@@ -150,7 +150,7 @@ public class Menu extends javax.swing.JPanel {
         // TODO add your handling code here:
         p.IrAInventario();
     }//GEN-LAST:event_jButton3ActionPerformed
->>>>>>> eab728accb52aa7405ece833836457003bda885f
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

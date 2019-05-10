@@ -37,7 +37,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import seguridad.sevinjofagaca.controlador.LogsJpaController;
 import seguridad.sevinjofagaca.modelo.Logs;
->>>>>>> eab728accb52aa7405ece833836457003bda885f
+
 import seguridad.sevinjofagaca.modelo.Servicio;
 
 /**
@@ -227,7 +227,7 @@ public class Operar {
                      
          }
     }
-     */
+     
 
     public boolean RegistrarServicio(String nombreServicio, String tipoServicio, String costoServicio, String plazoServicio) {
      
