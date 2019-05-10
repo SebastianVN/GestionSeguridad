@@ -33,7 +33,7 @@ public class Menu extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         ButtonAdmin = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonInventario = new javax.swing.JButton();
         cifrado = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -56,11 +56,19 @@ public class Menu extends javax.swing.JPanel {
             }
         });
 
+<<<<<<< HEAD
+        jButtonInventario.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jButtonInventario.setText("Inventario");
+        jButtonInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInventarioActionPerformed(evt);
+=======
         jButton3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton3.setText("Inventario");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
             }
         });
 
@@ -76,6 +84,17 @@ public class Menu extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
+            .addGroup(layout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonInventario))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+=======
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(87, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -99,7 +118,7 @@ public class Menu extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(jButtonInventario)
                 .addGap(18, 18, 18)
                 .addComponent(cifrado)
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -116,6 +135,12 @@ public class Menu extends javax.swing.JPanel {
           p.irACifrado();
     }//GEN-LAST:event_cifradoActionPerformed
 
+<<<<<<< HEAD
+    private void jButtonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventarioActionPerformed
+        // TODO add your handling code here:
+        p.irAInventario();
+    }//GEN-LAST:event_jButtonInventarioActionPerformed
+=======
     private void ButtonAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAdminActionPerformed
         // TODO add your handling code here:
         p.irAAdministrador();
@@ -125,13 +150,14 @@ public class Menu extends javax.swing.JPanel {
         // TODO add your handling code here:
         p.IrAInventario();
     }//GEN-LAST:event_jButton3ActionPerformed
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonAdmin;
     private javax.swing.JButton cifrado;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonInventario;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,9 +28,13 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+<<<<<<< HEAD
+import seguridad.sevinjofagaca.controlador.ServicioJpaController;
+=======
 import javax.swing.table.DefaultTableModel;
 import seguridad.sevinjofagaca.controlador.LogsJpaController;
 import seguridad.sevinjofagaca.modelo.Logs;
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
 import seguridad.sevinjofagaca.modelo.Servicio;
 
 /**
@@ -188,6 +192,29 @@ public class Operar {
                      
          }
     }
+<<<<<<< HEAD
+     */
+
+    public boolean RegistrarServicio(String nombreServicio, String tipoServicio, String costoServicio, String plazoServicio) {
+     
+        ServicioJpaController ujc = new ServicioJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+        Servicio u = new Servicio();
+        try {
+            u.setNombre(nombreServicio);
+            u.setTipoServicio(tipoServicio);
+            u.setPrecio(Integer.parseInt(costoServicio));
+            u.setPlazoPago(plazoServicio);
+            u.setIdUser(currentUser.getId());
+            ujc.create(u);
+            JOptionPane.showMessageDialog(null, "Se Guardaron Los datos");
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "error el registro no funcionannnaaaa");
+            return false;
+        }
+    }
+=======
 
     public void obtenerLogs(DefaultTableModel modelo2) {
         LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
@@ -202,4 +229,5 @@ public class Operar {
         }
     }
      
+>>>>>>> eab728accb52aa7405ece833836457003bda885f
 }
