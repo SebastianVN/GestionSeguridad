@@ -32,6 +32,7 @@ public class Principal extends JFrame {
     private Inventario inventario;
     private Cifrado cifrado;
     private Administrador admin;
+    private CifradoDes cifradodes;
     String UserLogin;
     
     
@@ -304,5 +305,25 @@ public class Principal extends JFrame {
     protected void modificarUsuario(String id, String nombre, String apellido, String user, JTable Tabla,String pass) {
         operar.Modificar(id,nombre,apellido,user,Tabla,pass);
         
+    }
+
+    protected void irACifradoDES() {
+        iniciarMarco();
+        //agrega el panelinicial
+        cifradodes = new CifradoDes(this);
+        cifradodes.setVisible(true);
+        add(cifradodes);
+        //se ajusta el frame
+        pack();
+        //centra la aplicacion 
+        setLocationRelativeTo(null);
+    }
+
+    protected String cifrarDES(String textoClaro) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        return operar.cifrarDES(textoClaro);
+    }
+    
+    protected String recibirClave() throws NoSuchAlgorithmException{
+        return operar.enviarClave();
     }
 }

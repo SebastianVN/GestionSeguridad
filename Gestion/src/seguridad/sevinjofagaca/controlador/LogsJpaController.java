@@ -40,7 +40,7 @@ public class LogsJpaController implements Serializable {
 
     
 
-    public void create(Logs logs) throws PreexistingEntityException, Exception {
+     public void create(Logs logs) throws PreexistingEntityException, Exception {
 
         EntityManager em = null;
         try {

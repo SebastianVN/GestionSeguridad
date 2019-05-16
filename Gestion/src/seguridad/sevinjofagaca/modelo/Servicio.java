@@ -65,11 +65,6 @@ public class Servicio implements Serializable {
     private int idUser;
 
 
-    @JoinColumn(name = "us", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    public Usuarios us;
-
-
     public Servicio() {
     }
 

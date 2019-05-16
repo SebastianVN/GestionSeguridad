@@ -53,11 +53,11 @@ public class Operar {
      */
     private Usuarios currentUser;
     private SecretKeySpec llaveDefinitiva;
-    
-    public static String fechaActual(){
+     private SecretKeySpec llaveDES;
+
+    public static Date fechaActual() {
         Date fecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/YYYY");
-        return formato.format(fecha);
+        return fecha;
     }
 
     public boolean iniciarSesion(String user, String pass) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
@@ -73,40 +73,19 @@ public class Operar {
         if (u != null) {
             if (u.getUser().equals(user) && u.getContraseña().equals(asHex(encriptado))) {
                 currentUser = u;
-                LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
-                Logs logs = new Logs();
-                System.out.println("Esta es la fecha actual : "+fechaActual());
-                try {
-                    logs.setId(23);
-                    logs.setTipoEvento("Login no exitoso");
-                    logs.setFecha(fechaActual());
-                    logs.setIdUser(currentUser.getId());
-                    lg.create(logs);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error en el ingreso, intente de nuevo");
-                }
+                agregarLogs("inicio de sesión exitoso");
                 return true;
             } else {
                 currentUser = null;
-                
+                agregarLogs("Inicio de sesión fallido");
                 return false;
             }
         } else {
-            LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
-                Logs logs = new Logs();
-                try {
-                    logs.setId(23);
-                    logs.setTipoEvento("Login no exitoso");
-                    logs.setFecha(fechaActual());
-                    logs.setIdUser(currentUser.getId());
-                    lg.create(logs);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error en el ingreso, intente de nuevo");
-                }
+            agregarLogs("usuario existente, error pass");
             currentUser = null;
             return false;
         }
-        
+
     }
 
     public void cerrarSesion() {
@@ -162,6 +141,20 @@ public class Operar {
 
     }
      */
+    public void agregarLogs(String tipoEvento){
+        LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+                Logs logs = new Logs();
+                System.out.println("Esta es la fecha actual : " + fechaActual());
+                try {
+                    logs.setId(23);
+                    logs.setTipoEvento(tipoEvento);
+                    logs.setFecha(fechaActual());
+                    logs.setIdUser(currentUser.getId());
+                    lg.create(logs);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+    }
     public boolean Registrar(String nombre, String usuario, String pass, String confirPass, String apellido, String cedula) {
         UsuariosJpaController ujc = new UsuariosJpaController(Persistence.createEntityManagerFactory("GestionPU"));
         Usuarios u = new Usuarios();
@@ -180,11 +173,12 @@ public class Operar {
             u.setContraseña(asHex(encriptado));
             ujc.create(u);
             JOptionPane.showMessageDialog(null, "Se Guardaron Los datos");
-            
+            agregarLogs("Registro exitoso");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error en el resgitro intente de nuevo");
+            agregarLogs("registro fallido");
             return false;
         }
 
@@ -211,26 +205,33 @@ public class Operar {
         SecretKeySpec secretKey = new SecretKeySpec(crudo, "AES");
         llaveDefinitiva = secretKey;
     }
-    
+
+    public String enviarClave() throws NoSuchAlgorithmException {
+        KeyGenerator kgen = KeyGenerator.getInstance("DES");
+        kgen.init(56);
+        SecretKey llave = kgen.generateKey();
+        byte[] crudo = llave.getEncoded();
+        SecretKeySpec secretKey = new SecretKeySpec(crudo, "DES");
+        llaveDES = secretKey;
+        return secretKey.toString();
+    }
 
     public void ObtenerUsuarios(DefaultTableModel modelo2) {
-         UsuariosJpaController ujc = new UsuariosJpaController(Persistence.createEntityManagerFactory("GestionPU"));
-         Object O[] = null;
-         List<Usuarios> user = ujc.findUsuariosEntities();
-         for(int i = 0; i < user.size(); i++){
-             modelo2.addRow(O);
-             modelo2.setValueAt(user.get(i).getId(), i, 0);
-             modelo2.setValueAt(user.get(i).getUser(), i, 1);
-             modelo2.setValueAt(user.get(i).getNombre(), i, 2);
-             modelo2.setValueAt(user.get(i).getApellido(), i, 3);
-             
-                     
-         }
+        UsuariosJpaController ujc = new UsuariosJpaController(Persistence.createEntityManagerFactory("GestionPU"));
+        Object O[] = null;
+        List<Usuarios> user = ujc.findUsuariosEntities();
+        for (int i = 0; i < user.size(); i++) {
+            modelo2.addRow(O);
+            modelo2.setValueAt(user.get(i).getId(), i, 0);
+            modelo2.setValueAt(user.get(i).getUser(), i, 1);
+            modelo2.setValueAt(user.get(i).getNombre(), i, 2);
+            modelo2.setValueAt(user.get(i).getApellido(), i, 3);
+
+        }
     }
-     
 
     public boolean RegistrarServicio(String nombreServicio, String tipoServicio, String costoServicio, String plazoServicio) {
-     
+
         ServicioJpaController ujc = new ServicioJpaController(Persistence.createEntityManagerFactory("GestionPU"));
         Servicio u = new Servicio();
         try {
@@ -241,52 +242,71 @@ public class Operar {
             u.setIdUser(currentUser.getId());
             ujc.create(u);
             JOptionPane.showMessageDialog(null, "Se Guardaron Los datos");
+            agregarLogs("Servicio creado exitosamente");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "error el registro no funcionannnaaaa");
+            agregarLogs("Servicio no creado");
             return false;
         }
     }
 
     public void obtenerLogs(DefaultTableModel modelo2) {
         LogsJpaController lg = new LogsJpaController(Persistence.createEntityManagerFactory("GestionPU"));
-        Object O[]=null;
+        Object O[] = null;
         List<Logs> logs = lg.findLogsEntities();
-        for(int i = 0; i < logs.size(); i++){
+        for (int i = 0; i < logs.size(); i++) {
             modelo2.addRow(O);
-             modelo2.setValueAt(logs.get(i).getId(), i, 0);
-             modelo2.setValueAt(logs.get(i).getTipoEvento(), i, 1);
-             modelo2.setValueAt(logs.get(i).getFecha(), i, 2);
-             modelo2.setValueAt(logs.get(i).getIdUser(), i, 3);
+            modelo2.setValueAt(logs.get(i).getId(), i, 0);
+            modelo2.setValueAt(logs.get(i).getTipoEvento(), i, 1);
+            modelo2.setValueAt(logs.get(i).getFecha(), i, 2);
+            modelo2.setValueAt(logs.get(i).getIdUser(), i, 3);
         }
     }
 
     public void eliminar(JTable Tabla) {
         try {
             UsuariosJpaController ujc = new UsuariosJpaController(Persistence.createEntityManagerFactory("GestionPU"));
-       int u = (int) Tabla.getValueAt(Tabla.getSelectedRow(), 0);
-        ujc.destroy(u);
-        JOptionPane.showMessageDialog(null, "El usuario ha sido eliminado correctamente");
+            int u = (int) Tabla.getValueAt(Tabla.getSelectedRow(), 0);
+            ujc.destroy(u);
+            JOptionPane.showMessageDialog(null, "El usuario ha sido eliminado correctamente");
+            agregarLogs("El usuario eliminado");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, ""+e.getMessage());
+            JOptionPane.showMessageDialog(null, "" + e.getMessage());
+             agregarLogs("El usuario no eliminado");
         }
     }
 
-    public void Modificar(String id, String nombre, String apellido, String user,JTable Tabla,String pass) {
+    public void Modificar(String id, String nombre, String apellido, String user, JTable Tabla, String pass) {
         try {
             UsuariosJpaController ujc = new UsuariosJpaController(Persistence.createEntityManagerFactory("GestionPU"));
-        Usuarios u = (Usuarios) Tabla.getValueAt(Tabla.getSelectedRow(), 0);
-        u.setId(Integer.parseInt(id));
-        u.setNombre(nombre);
-        u.setApellido(apellido);
-        u.setContraseña(pass);
-        u.setUser(user);
-        ujc.edit(u);
-        JOptionPane.showMessageDialog(null, "El usuario ha sido Modificado correctamente");
+            Usuarios u = (Usuarios) Tabla.getValueAt(Tabla.getSelectedRow(), 0);
+            u.setId(Integer.parseInt(id));
+            u.setNombre(nombre);
+            u.setApellido(apellido);
+            u.setContraseña(pass);
+            u.setUser(user);
+            ujc.edit(u);
+            JOptionPane.showMessageDialog(null, "El usuario ha sido Modificado correctamente");
+            agregarLogs("Usuario modificado");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, ""+e.getMessage());
+            JOptionPane.showMessageDialog(null, "" + e.getMessage());
+            agregarLogs("Usuario no modificado error");
         }
     }
-     
+
+    public String cifrarDES(String textoClaro) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        Cipher cipher = Cipher.getInstance("DES");
+        String original = textoClaro;
+        String clave = enviarClave();
+        SecretKeySpec secretKey = llaveDES;
+        System.out.println("Este es el mensaje:" + original);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        byte[] encriptado = cipher.doFinal(original.getBytes());
+        System.out.println("Mensaje Encriptado con el algortimo DES: " + asHex(encriptado));
+        agregarLogs("Cifrado DES realizado");
+        return asHex(encriptado);
+    }
+
 }
